@@ -1,0 +1,85 @@
+package data.dimensions;
+
+import javafx.stage.Stage;
+import java.util.LinkedHashSet;
+
+import forms.DialogElement;
+import foundation.AssociativeList;
+import foundation.RegistryItem;
+
+/**
+ * Class Shareholder
+ * @author Peter Cross
+ */
+public class Shareholder extends RegistryItem
+{
+    protected static  LinkedHashSet list;       // List of Items
+    
+    @Override
+    protected DialogElement[][] createHeader() 
+    {
+        DialogElement[][] header = new DialogElement[1][3];
+        
+        DialogElement hdr;
+        
+        if ( fields == null )
+            fields = new AssociativeList();
+        
+        hdr = new DialogElement( "ID  " );
+        hdr.valueType = "Number";
+        hdr.width = 60;
+        hdr.textValue = (String) fields.get( "iD" );
+        hdr.validation = validationCode( hdr.labelName );
+        header[0][0] = hdr;
+        
+        hdr = new DialogElement( "Name     " );
+        hdr.valueType = "Text";
+        hdr.width = 200;
+        hdr.textValue = (String) fields.get( "name" );
+        hdr.validation = validationCode( hdr.labelName );
+        header[0][1] = hdr;
+        
+        hdr = new DialogElement( "Phone" );
+        hdr.valueType = "Text";
+        hdr.width = 200;
+        hdr.textValue = (String) fields.get( "phone" );
+        header[0][2] = hdr;
+        
+        return header;
+    }
+
+    @Override
+    protected void init( String[][] header, String[][][] table ) 
+    {
+        if ( header.length > 0 )
+        {
+            fields.set( "iD", header[0][0] );
+            fields.set( "name", header[0][1]  );
+            fields.set( "phone",  header[0][2] );
+        }
+    }
+    
+    public static LinkedHashSet getItemsList()
+    {
+        return list;
+    }
+    
+    public static LinkedHashSet[] createList()
+    {
+        list = new LinkedHashSet<>();
+        
+        return new LinkedHashSet[] { list };
+    }
+    
+    public Shareholder()
+    {
+        super( "Shareholder" );
+    }
+   
+    public Shareholder( Stage stage )
+    {
+        super( stage, "Shareholder" );
+        list.add( this );
+    }
+    
+} // End of class ** Shareholder **
